@@ -4,17 +4,24 @@ import java.util.Date;
 
 public class Empregado extends Pessoa{
     private int codigoSetor;
-    private double salarioBase = 2000.00;
+    private double salarioBase;
     private double imposto = 0.15;
     private String cargo;
 
-    Empregado(String cargo, int codigoSetor, String telefone, String endereco, String nome, Date dataNascimento){
-        super(nome, endereco, telefone, dataNascimento);
+    Empregado(String cargo, int codigoSetor, double salarioBase, String telefone, String endereco, String nome, Date dataNascimento, String sexo){
+        super(nome, endereco, telefone, dataNascimento, sexo);
         this.codigoSetor = codigoSetor;
         this.cargo = cargo;
+        this.salarioBase = salarioBase;
     }
+    
 
-    public int getCodigoSetor() {
+    public void setCargo(String cargo) {
+		this.cargo = cargo;
+	}
+
+
+	public int getCodigoSetor() {
         return codigoSetor;
     }
 

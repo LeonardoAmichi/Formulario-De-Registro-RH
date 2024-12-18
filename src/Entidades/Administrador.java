@@ -5,10 +5,11 @@ import java.util.Date;
 public class Administrador extends Empregado{
     private double ajudaDeCusto;
 
-    public Administrador(String cargo, double ajudaDeCusto, int codigoSetor, String telefone, String endereco, String nome, Date dataNascimento){
-        super(cargo, codigoSetor, telefone, endereco, nome, dataNascimento);
+    public Administrador(String cargo, double ajudaDeCusto, int codigoSetor, double salarioBase,String telefone, String endereco, String nome, Date dataNascimento, String sexo){
+        super(cargo, codigoSetor, salarioBase, telefone, endereco, nome, dataNascimento, sexo);
         this.ajudaDeCusto = ajudaDeCusto;
     }
+    
 
     public double getAjudaDeCusto() {
         return ajudaDeCusto;
@@ -18,7 +19,7 @@ public class Administrador extends Empregado{
         this.ajudaDeCusto = ajudaDeCusto;
     }
 
-    @Override
+   
     public double calcularSalario() {
         return super.calcularSalario() + ajudaDeCusto;
     }

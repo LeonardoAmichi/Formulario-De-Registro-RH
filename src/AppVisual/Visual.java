@@ -3,14 +3,11 @@ package AppVisual;
 import java.awt.EventQueue;
 
 import javax.swing.*;
-
-import Entidades.Pessoa;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.Date;
 
-
-
+import Entidades.*;
 
 
 public class Visual implements ActionListener{
@@ -58,6 +55,8 @@ public class Visual implements ActionListener{
     private JTextField tAValorProducao;
     private JLabel lblValorVendas;
     private JTextField tAValorVendas;
+    private JLabel lblSalario;
+    private JTextField tASalario;
 
     private String dias[]
             = { "1", "2", "3", "4", "5",
@@ -79,18 +78,12 @@ public class Visual implements ActionListener{
             "2011", "2012", "2013", "2014",
             "2015", "2016", "2017", "2018",
             "2019", "2020", "2021", "2022",};
-
-
-    /*Construtor para inicializar os componentes das tela com valores padrões.*/
-
-    /**
-     * Launch the application.
-     */
+    
     public static void main(String[] args) {
         EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
-                    Visual window = new Visual();
+                	Visual window = new Visual();
                     window.frame.setVisible(true);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -113,7 +106,7 @@ public class Visual implements ActionListener{
 
         frame = new JFrame();
         frame.setTitle("Formulario de Registro");
-        frame.setBounds(300, 90, 1138, 623);
+        frame.setBounds(300, 90, 1137, 667);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setResizable(false);
 
@@ -214,20 +207,20 @@ public class Visual implements ActionListener{
         termoConcentimento = new JCheckBox("Aceitar termos e condições");
         termoConcentimento.setFont(new Font("Arial", Font.PLAIN, 15));
         termoConcentimento.setSize(250, 20);
-        termoConcentimento.setLocation(313, 526);
+        termoConcentimento.setLocation(313, 570);
         container.add(termoConcentimento);
 
         bSubmeter = new JButton("Enviar");
         bSubmeter.setFont(new Font("Arial", Font.PLAIN, 15));
         bSubmeter.setSize(100, 20);
-        bSubmeter.setLocation(313, 553);
+        bSubmeter.setLocation(313, 597);
         bSubmeter.addActionListener((ActionListener) this);
         container.add(bSubmeter);
 
         bresetar = new JButton("Resetar");
         bresetar.setFont(new Font("Arial", Font.PLAIN, 15));
         bresetar.setSize(100, 20);
-        bresetar.setLocation(423, 553);
+        bresetar.setLocation(423, 597);
         bresetar.addActionListener((ActionListener) this);
         container.add(bresetar);
 
@@ -242,7 +235,7 @@ public class Visual implements ActionListener{
         mensagem = new JLabel("");
         mensagem.setFont(new Font("Arial", Font.PLAIN, 20));
         mensagem.setSize(500, 25);
-        mensagem.setLocation(280, 494);
+        mensagem.setLocation(200, 539);
         container.add(mensagem);
 
         jTMensagemErro = new JTextArea();
@@ -254,24 +247,24 @@ public class Visual implements ActionListener{
 
         lblProfissao = new JLabel("Profissão");
         lblProfissao.setFont(new Font("Arial", Font.PLAIN, 20));
-        lblProfissao.setBounds(372, 415, 100, 20);
+        lblProfissao.setBounds(363, 462, 100, 20);
         frame.getContentPane().add(lblProfissao);
 
         rdbtnAdministrador = new JRadioButton("Administrador");
-        rdbtnAdministrador.setBounds(411, 464, 110, 23);
+        rdbtnAdministrador.setBounds(411, 489, 91, 23);
         frame.getContentPane().add(rdbtnAdministrador);
 
         rdbtnOperario = new JRadioButton("Operário");
-        rdbtnOperario.setBounds(411, 442, 80, 20);
+        rdbtnOperario.setBounds(412, 512, 80, 20);
         frame.getContentPane().add(rdbtnOperario);
 
         rdbtnFornecedor = new JRadioButton("Fornecedor");
-        rdbtnFornecedor.setBounds(330, 465, 80, 20);
+        rdbtnFornecedor.setBounds(330, 512, 80, 20);
         frame.getContentPane().add(rdbtnFornecedor);
 
         rdbtnVendedor = new JRadioButton("Vendedor");
         rdbtnVendedor.setSelected(true);
-        rdbtnVendedor.setBounds(330, 442, 80, 20);
+        rdbtnVendedor.setBounds(330, 489, 80, 20);
         frame.getContentPane().add(rdbtnVendedor);
 
         bGProfissoes = new ButtonGroup();
@@ -339,6 +332,16 @@ public class Visual implements ActionListener{
         tAValorVendas.setFont(new Font("Arial", Font.PLAIN, 15));
         tAValorVendas.setBounds(584, 353, 173, 20);
         frame.getContentPane().add(tAValorVendas);
+        
+        lblSalario = new JLabel("Salário");
+        lblSalario.setFont(new Font("Arial", Font.PLAIN, 20));
+        lblSalario.setBounds(457, 396, 100, 30);
+        frame.getContentPane().add(lblSalario);
+        
+        tASalario = new JTextField();
+        tASalario.setFont(new Font("Arial", Font.PLAIN, 15));
+        tASalario.setBounds(534, 404, 223, 20);
+        frame.getContentPane().add(tASalario);
 
         frame.setVisible(true);
 
@@ -355,6 +358,13 @@ public class Visual implements ActionListener{
         tAOutrasInformacoes.setText("");
         jTMensagemErro.setText("");
         mensagem.setText("Por favor preencha todos os dados");
+        mensagem.setForeground(Color.RED);
+    }
+    
+    public void erroValidacao() {
+    	tAOutrasInformacoes.setText("");
+        jTMensagemErro.setText("");
+        mensagem.setText("Por favor preencha os dados corretamente");
         mensagem.setForeground(Color.RED);
     }
 
@@ -425,23 +435,35 @@ public class Visual implements ActionListener{
 
 
                 Date dataNascimentoPessoa = new Date(d, m, a);
-                Pessoa pessoa = new Pessoa(tnome.getText(), tEndereco.getText(), sexo, dataNascimentoPessoa);
+                
+             
+                
+                Pessoa pessoa = new Pessoa(tnome.getText(), tEndereco.getText(), tNumeroCelular.getText(), dataNascimentoPessoa, sexo);
+               
                 
                 if(tEndereco.getText().isEmpty()) {
                 	erroDados();
                 }
                 
                 String dados3 = "Endereco : " + tEndereco.getText();
-                
-                	
+              
 
+                
                 if(rdbtnAdministrador.isSelected()){
-                    if(taAjudaDeCusto.getText().isEmpty()){
+                    if(taAjudaDeCusto.getText().isEmpty() || tACodigoSetor.getText().isEmpty() || tASalario.getText().isEmpty()){
                         erroDados();
                     }
                     else{
+                    	Double ajudaCusto = Double.parseDouble(taAjudaDeCusto.getText());
+                    	Integer codigosetor = Integer.parseInt(tACodigoSetor.getText());
+                    	Double salario = Double.parseDouble(tASalario.getText());
+                    	
+                    	Administrador administrador = new Administrador(rdbtnOperario.getText(), ajudaCusto, codigosetor, salario, numeroCelular.getText(), tEndereco.getText(),tnome.getText(), dataNascimentoPessoa, sexo);
+   	
+                    	
                         String dados4 = "\nCargo : " + rdbtnAdministrador.getText()
-                                + "\nAjuda de Custo: " + taAjudaDeCusto.getText();
+                                + "\nAjuda de Custo: " + taAjudaDeCusto.getText()
+                                + "\nSalário: " + administrador.calcularSalario();
                         tAOutrasInformacoes.setText(dados + dados1 + dados2 + dados3 + dados4 + "\n\n"+ pessoa);
                         tAOutrasInformacoes.setEditable(false);
                         mensagem.setText("Registrado com Sucesso...");
@@ -449,12 +471,19 @@ public class Visual implements ActionListener{
                 }
 
                 if(rdbtnOperario.isSelected()){
-                    if(tAValorProducao.getText().isEmpty()){
+                    if(tAValorProducao.getText().isEmpty() || tACodigoSetor.getText().isEmpty() || tASalario.getText().isEmpty()){
                         erroDados();
                     }
                     else{
+                    	Double valorProducao = Double.parseDouble(tAValorProducao.getText());
+                    	Integer codigosetor = Integer.parseInt(tACodigoSetor.getText());
+                    	Double salario = Double.parseDouble(tASalario.getText());
+                    	
+                    	Operario operario = new Operario(rdbtnOperario.getText(), valorProducao, codigosetor, salario, numeroCelular.getText(), tEndereco.getText(),tnome.getText(), dataNascimentoPessoa, sexo);
+                    	
                         String dados4 = "\nCargo  :" + rdbtnOperario.getText()
-                                + "\nValor de Produção: " + tAValorProducao.getText();
+                                + "\nValor de Produção: " + tAValorProducao.getText()
+                                + "\nSalario: " + operario.calcularSalario();
                         tAOutrasInformacoes.setText(dados + dados1 + dados2 + dados3 + dados4 + "\n\n"+ pessoa);
                         tAOutrasInformacoes.setEditable(false);
                         mensagem.setText("Registrado com Sucesso...");
@@ -462,11 +491,18 @@ public class Visual implements ActionListener{
                 }
 
                 if(rdbtnVendedor.isSelected()) {
-                    if (tAValorVendas.getText().isEmpty()) {
+                    if (tAValorVendas.getText().isEmpty() || tACodigoSetor.getText().isEmpty() || tASalario.getText().isEmpty()) {
                         erroDados();
                     } else {
+                    	Double valorVenda = Double.parseDouble(tAValorVendas.getText());
+                    	Integer codigosetor = Integer.parseInt(tACodigoSetor.getText());
+                    	Double salario = Double.parseDouble(tASalario.getText());
+                    	
+                    	Vendedor vendedor = new Vendedor(rdbtnVendedor.getText(), valorVenda, codigosetor, salario, numeroCelular.getText(), tEndereco.getText(),tnome.getText(), dataNascimentoPessoa, sexo);
+                    	
                         String dados4 = "\nCargo  :" + rdbtnVendedor.getText()
-                                + "\nValor de Vendas: " + tAValorVendas.getText();
+                                + "\nValor de Vendas: " + tAValorVendas.getText()
+                                + "\nSalário: " + vendedor.calcularSalario();
                         tAOutrasInformacoes.setText(dados + dados1 + dados2 + dados3 + dados4 + "\n\n" + pessoa);
                         tAOutrasInformacoes.setEditable(false);
                         mensagem.setText("Registrado com Sucesso...");
@@ -474,17 +510,67 @@ public class Visual implements ActionListener{
                 }
 
                 if(rdbtnFornecedor.isSelected()) {
-                    if (tAValorCredito.getText().isEmpty() || tAValorDivida.getText().equals("")) {
+                    if (tAValorCredito.getText().isEmpty() || tAValorDivida.getText().isEmpty() || tACodigoSetor.getText().isEmpty() || tASalario.getText().isEmpty()) {
                         erroDados();
                     } else {
+                    	
+                    	Double valorCredito = Double.parseDouble(tAValorCredito.getText());
+                    	Double valorDivida = Double.parseDouble(tAValorDivida.getText());
+
+                    	Fornecedor fornecedor = new Fornecedor (valorCredito, valorDivida, numeroCelular.getText(), tEndereco.getText(),tnome.getText(), dataNascimentoPessoa, sexo);
+                    	
                         String dados4 = "\nCargo  :" + rdbtnFornecedor.getText()
                                 + "\nValor de Crédito: " + tAValorCredito.getText()
-                                + "\nValor de Dívida: " + tAValorDivida.getText();
+                                + "\nValor de Dívida: " + tAValorDivida.getText()
+                                + "Saldo: " + fornecedor.obterSaldo();
+           
                         tAOutrasInformacoes.setText(dados + dados1 + dados2 + dados3 + dados4 + "\n\n" + pessoa);
                         tAOutrasInformacoes.setEditable(false);
                         mensagem.setText("Registrado com Sucesso...");
                     }
                 }
+                
+                //Validações
+                if(pessoa.isValidNome(tnome.getText())) {
+                	System.out.println("Correto");
+                	pessoa.setNome(tnome.getText());
+                }
+                else {
+                	tnome.setText("");
+                	pessoa.setNome("");
+                	erroValidacao();
+                }
+                
+                if(pessoa.isValidEndereco(tEndereco.getText())) {
+                	System.out.println("Correto");
+                	pessoa.setNome(tEndereco.getText());
+                }
+                else {
+                	tEndereco.setText("");
+                	pessoa.setEndereco("");
+                	erroValidacao();
+                }
+                
+                if(pessoa.isValidTelefone(numeroCelular.getText())) {
+                	System.out.println("Correto");
+                	pessoa.setNome(numeroCelular.getText());
+                }
+                else {
+                	tNumeroCelular.setText("");
+                	pessoa.setTelefone("");
+                	erroValidacao();
+                }
+                
+                
+                if(pessoa.isValidGenero(sexo)) {
+                	System.out.println("Correto");
+                	pessoa.setSexo(sexo);
+                }
+                else {
+                	pessoa.setSexo("");
+                	erroValidacao();
+                }
+                
 
             }
             else {
@@ -506,7 +592,5 @@ public class Visual implements ActionListener{
             jTMensagemErro.setText(def);
         }
     }
-
-
 }
 

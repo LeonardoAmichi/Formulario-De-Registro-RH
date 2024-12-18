@@ -6,8 +6,8 @@ public class Vendedor extends Empregado{
     private double valorVendas;
     private double comissao = 0.10;
 
-    public Vendedor(String cargo, double valorVendas, int codigoSetor, String telefone, String endereco, String nome, Date dataNascimento){
-        super(cargo, codigoSetor, telefone, endereco, nome, dataNascimento);
+    public Vendedor(String cargo, double valorVendas, int codigoSetor, double salarioBase ,String telefone, String endereco, String nome, Date dataNascimento, String sexo){
+        super(cargo, codigoSetor, salarioBase, telefone, endereco, nome, dataNascimento, sexo);
         this.valorVendas = valorVendas;
     }
 

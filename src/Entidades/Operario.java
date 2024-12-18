@@ -6,8 +6,8 @@ public class Operario extends Empregado{
     private double valorProducao;
     private double comissao = 0.10;
 
-    public Operario(String cargo, double valorProducao, int codigoSetor, String telefone, String endereco, String nome, Date dataNascimento){
-        super(cargo, codigoSetor, telefone, endereco, nome, dataNascimento);
+    public Operario(String cargo, double valorProducao, int codigoSetor, double salarioBase, String telefone, String endereco, String nome, Date dataNascimento, String sexo){
+        super(cargo, codigoSetor, salarioBase, telefone, endereco, nome, dataNascimento, sexo);
         this.valorProducao = valorProducao;
     }
 
