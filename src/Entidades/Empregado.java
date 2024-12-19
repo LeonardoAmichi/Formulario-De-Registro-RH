@@ -7,8 +7,14 @@ public class Empregado extends Pessoa{
     private double salarioBase;
     private double imposto = 0.15;
     private String cargo;
+    
+    
+    public Empregado(int codigoSetor, double salarioBase) {
+    	this.codigoSetor = codigoSetor;
+    	this.salarioBase = salarioBase;
+    }
 
-    Empregado(String cargo, int codigoSetor, double salarioBase, String telefone, String endereco, String nome, Date dataNascimento, String sexo){
+    public Empregado(String cargo, int codigoSetor, double salarioBase, String telefone, String endereco, String nome, Date dataNascimento, String sexo){
         super(nome, endereco, telefone, dataNascimento, sexo);
         this.codigoSetor = codigoSetor;
         this.cargo = cargo;
@@ -48,6 +54,15 @@ public class Empregado extends Pessoa{
     public String getCargo() {
         return this.cargo;
     }
+    
+    public boolean isValidCodigoSetor(String codigoSetor) {
+        return codigoSetor != null && !codigoSetor.trim().isEmpty() && codigoSetor.matches("\\d+") && Integer.parseInt(codigoSetor) >= 0;
+    }
+    
+    public boolean isValidSalario(String salario) {
+        return salario != null && !salario.trim().isEmpty() && salario.matches("\\d+") && salario.length() < 7 && Double.parseDouble(salario) >= 0;
+    }
+
 
     public double calcularSalario() {
         return salarioBase -(salarioBase * imposto);

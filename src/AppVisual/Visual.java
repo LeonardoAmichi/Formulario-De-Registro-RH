@@ -13,8 +13,6 @@ import Entidades.*;
 public class Visual implements ActionListener{
 
     private JFrame frame;
-    private JTextField textField;
-    private JTextField textField_1;
     private Container container;
     private JLabel titulo;
     private JLabel nome;
@@ -235,7 +233,7 @@ public class Visual implements ActionListener{
         mensagem = new JLabel("");
         mensagem.setFont(new Font("Arial", Font.PLAIN, 20));
         mensagem.setSize(500, 25);
-        mensagem.setLocation(200, 539);
+        mensagem.setLocation(280, 539);
         container.add(mensagem);
 
         jTMensagemErro = new JTextArea();
@@ -364,7 +362,7 @@ public class Visual implements ActionListener{
     public void erroValidacao() {
     	tAOutrasInformacoes.setText("");
         jTMensagemErro.setText("");
-        mensagem.setText("Por favor preencha os dados corretamente");
+        mensagem.setText("Erro na Validação de dados");
         mensagem.setForeground(Color.RED);
     }
 
@@ -436,19 +434,10 @@ public class Visual implements ActionListener{
 
                 Date dataNascimentoPessoa = new Date(d, m, a);
                 
-             
-                
                 Pessoa pessoa = new Pessoa(tnome.getText(), tEndereco.getText(), tNumeroCelular.getText(), dataNascimentoPessoa, sexo);
-               
-                
-                if(tEndereco.getText().isEmpty()) {
-                	erroDados();
-                }
                 
                 String dados3 = "Endereco : " + tEndereco.getText();
               
-
-                
                 if(rdbtnAdministrador.isSelected()){
                     if(taAjudaDeCusto.getText().isEmpty() || tACodigoSetor.getText().isEmpty() || tASalario.getText().isEmpty()){
                         erroDados();
@@ -456,10 +445,14 @@ public class Visual implements ActionListener{
                     else{
                     	Double ajudaCusto = Double.parseDouble(taAjudaDeCusto.getText());
                     	Integer codigosetor = Integer.parseInt(tACodigoSetor.getText());
-                    	Double salario = Double.parseDouble(tASalario.getText());
+                     	Double salario = Double.parseDouble(tASalario.getText());
+                    	Administrador administrador = new Administrador(rdbtnOperario.getText(), ajudaCusto, codigosetor, salario, tNumeroCelular.getText(), tEndereco.getText(), tnome.getText(), dataNascimentoPessoa, sexo);
                     	
-                    	Administrador administrador = new Administrador(rdbtnOperario.getText(), ajudaCusto, codigosetor, salario, numeroCelular.getText(), tEndereco.getText(),tnome.getText(), dataNascimentoPessoa, sexo);
-   	
+                    	if(administrador.isValidCodigoSetor(tACodigoSetor.getText()) == false || administrador.isValidSalario(tASalario.getText()) == false) {
+                    		tACodigoSetor.setText("");
+                    		tASalario.setText("");
+                    		erroValidacao();
+                    	}
                     	
                         String dados4 = "\nCargo : " + rdbtnAdministrador.getText()
                                 + "\nAjuda de Custo: " + taAjudaDeCusto.getText()
@@ -477,13 +470,12 @@ public class Visual implements ActionListener{
                     else{
                     	Double valorProducao = Double.parseDouble(tAValorProducao.getText());
                     	Integer codigosetor = Integer.parseInt(tACodigoSetor.getText());
-                    	Double salario = Double.parseDouble(tASalario.getText());
-                    	
-                    	Operario operario = new Operario(rdbtnOperario.getText(), valorProducao, codigosetor, salario, numeroCelular.getText(), tEndereco.getText(),tnome.getText(), dataNascimentoPessoa, sexo);
+                     	Double salario = Double.parseDouble(tASalario.getText());
+                    	Operario operario = new Operario(rdbtnOperario.getText(), valorProducao, codigosetor, salario, tNumeroCelular.getText(), tEndereco.getText(),tnome.getText(), dataNascimentoPessoa, sexo);
                     	
                         String dados4 = "\nCargo  :" + rdbtnOperario.getText()
                                 + "\nValor de Produção: " + tAValorProducao.getText()
-                                + "\nSalario: " + operario.calcularSalario();
+                                + "\nSalário: " + operario.calcularSalario();
                         tAOutrasInformacoes.setText(dados + dados1 + dados2 + dados3 + dados4 + "\n\n"+ pessoa);
                         tAOutrasInformacoes.setEditable(false);
                         mensagem.setText("Registrado com Sucesso...");
@@ -496,9 +488,8 @@ public class Visual implements ActionListener{
                     } else {
                     	Double valorVenda = Double.parseDouble(tAValorVendas.getText());
                     	Integer codigosetor = Integer.parseInt(tACodigoSetor.getText());
-                    	Double salario = Double.parseDouble(tASalario.getText());
-                    	
-                    	Vendedor vendedor = new Vendedor(rdbtnVendedor.getText(), valorVenda, codigosetor, salario, numeroCelular.getText(), tEndereco.getText(),tnome.getText(), dataNascimentoPessoa, sexo);
+                     	Double salario = Double.parseDouble(tASalario.getText());
+                    	Vendedor vendedor = new Vendedor(rdbtnVendedor.getText(), valorVenda, codigosetor, salario, tNumeroCelular.getText(), tEndereco.getText(),tnome.getText(), dataNascimentoPessoa, sexo);
                     	
                         String dados4 = "\nCargo  :" + rdbtnVendedor.getText()
                                 + "\nValor de Vendas: " + tAValorVendas.getText()
@@ -516,8 +507,8 @@ public class Visual implements ActionListener{
                     	
                     	Double valorCredito = Double.parseDouble(tAValorCredito.getText());
                     	Double valorDivida = Double.parseDouble(tAValorDivida.getText());
-
-                    	Fornecedor fornecedor = new Fornecedor (valorCredito, valorDivida, numeroCelular.getText(), tEndereco.getText(),tnome.getText(), dataNascimentoPessoa, sexo);
+                    	
+                    	Fornecedor fornecedor = new Fornecedor (valorCredito, valorDivida, tNumeroCelular.getText(), tEndereco.getText(),tnome.getText(), dataNascimentoPessoa, sexo);
                     	
                         String dados4 = "\nCargo  :" + rdbtnFornecedor.getText()
                                 + "\nValor de Crédito: " + tAValorCredito.getText()
@@ -531,8 +522,7 @@ public class Visual implements ActionListener{
                 }
                 
                 //Validações
-                if(pessoa.isValidNome(tnome.getText())) {
-                	System.out.println("Correto");
+               if(pessoa.isValidNome(tnome.getText())) {
                 	pessoa.setNome(tnome.getText());
                 }
                 else {
@@ -542,8 +532,7 @@ public class Visual implements ActionListener{
                 }
                 
                 if(pessoa.isValidEndereco(tEndereco.getText())) {
-                	System.out.println("Correto");
-                	pessoa.setNome(tEndereco.getText());
+                	pessoa.setEndereco(tEndereco.getText());
                 }
                 else {
                 	tEndereco.setText("");
@@ -551,26 +540,15 @@ public class Visual implements ActionListener{
                 	erroValidacao();
                 }
                 
-                if(pessoa.isValidTelefone(numeroCelular.getText())) {
-                	System.out.println("Correto");
-                	pessoa.setNome(numeroCelular.getText());
+               if(pessoa.isValidTelefone(tNumeroCelular.getText())) {
+                	pessoa.setTelefone(numeroCelular.getText());
                 }
                 else {
                 	tNumeroCelular.setText("");
                 	pessoa.setTelefone("");
                 	erroValidacao();
-                }
-                
-                
-                if(pessoa.isValidGenero(sexo)) {
-                	System.out.println("Correto");
-                	pessoa.setSexo(sexo);
-                }
-                else {
-                	pessoa.setSexo("");
-                	erroValidacao();
-                }
-                
+                } 
+               
 
             }
             else {

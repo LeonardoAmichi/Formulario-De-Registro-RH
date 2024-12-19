@@ -8,6 +8,15 @@ public class Pessoa {
     private String telefone;
     private Date dataNascimento;
     private String sexo;
+    
+    public Pessoa() {
+        // Inicializando os atributos com valores padrão
+        this.nome = "";
+        this.endereco = "";
+        this.telefone = "";
+        this.dataNascimento = new Date(); // Inicializa com a data atual
+        this.sexo = "";
+    }
 
     public Pessoa(String nome, String endereco, String telefone, Date dataNascimento, String sexo){
         this.nome = nome;
@@ -61,7 +70,7 @@ public class Pessoa {
 	}
 
 	public boolean isValidNome(String nome) {
-        return nome != null && !nome.trim().isEmpty() && nome.matches("[a-zA-Z ]+");
+        return nome != null && nome.matches("[a-zA-Z ]+");
     }
     
     public boolean isValidTelefone(String telefone) {
@@ -69,17 +78,9 @@ public class Pessoa {
     }
     
     public boolean isValidEndereco(String endereco) {
-        return endereco != null && !endereco.trim().isEmpty();
+        return endereco != null;
     }
     
-    public boolean isValidDataNascimento(String dataNascimento) {
-        return dataNascimento != null && !dataNascimento.trim().isEmpty();
-    }
-
-    public boolean isValidGenero(String genero) {
-        return genero != null && (genero.equalsIgnoreCase("Masculino") ||
-                genero.equalsIgnoreCase("Feminino") || genero.equalsIgnoreCase("Outro"));
-    }
 
     @Override
     public String toString() {
